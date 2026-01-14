@@ -89,12 +89,15 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>设置 API Key</h3>
-                <button class="modal-close" id="closeModalBtn">&times;</button>
+                <button class="modal-close" id="closeModalBtn" aria-label="Close">&times;</button>
             </div>
             <div class="modal-body">
                 <p class="modal-hint">输入您的 CDK/API Key：</p>
                 <input type="text" id="apiKeyInput" placeholder="cdk_xxxxxx..." class="input-field">
-                <p class="modal-note">🎫 1 个 CDK = 5 次<span class="highlight-success">成功</span>验证机会 | ✅ 不成功不扣次数</p>
+                <p class="modal-note">
+                    <span class="note-icon">🎫</span> 1 个 CDK = 5 次<span class="highlight-success">成功</span>验证机会 | <span
+                        class="note-icon">✅</span> 不成功不扣次数
+                </p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" id="cancelModalBtn">取消</button>

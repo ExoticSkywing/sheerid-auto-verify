@@ -475,29 +475,67 @@ textarea:focus,
 
 .modal-header {
     padding: 24px 32px;
-    border-bottom: 1px solid #f1f5f9;
+    border-bottom: 1px solid rgba(0, 132, 255, 0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.modal-close {
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: var(--text-tertiary);
+    cursor: pointer;
+    line-height: 1;
+    transition: color 0.2s;
+}
+
+.modal-close:hover {
+    color: var(--error);
 }
 
 .modal-body {
     padding: 32px;
 }
 
+.modal-footer {
+    padding: 24px 32px;
+    background: rgba(0, 132, 255, 0.02);
+    border-top: 1px solid rgba(0, 132, 255, 0.05);
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.modal-footer .btn {
+    min-width: 100px;
+}
+
 .modal-note {
     margin-top: 20px;
-    padding: 14px;
-    background: rgba(0, 132, 255, 0.05);
-    border: 1px solid rgba(0, 132, 255, 0.1);
+    padding: 16px;
+    background: rgba(0, 132, 255, 0.04);
+    border: 1px solid rgba(0, 132, 255, 0.08);
     border-radius: 12px;
     font-size: 14px;
-    color: #475569;
-    line-height: 1.5;
+    color: var(--text-secondary);
+    line-height: 1.6;
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 8px;
+}
+
+.note-icon {
+    font-size: 16px;
 }
 
 /* 强调文字样式 */
 .highlight-success {
     color: var(--success);
     font-weight: 800;
-    text-shadow: 0 0 10px rgba(52, 168, 83, 0.2);
+    margin: 0 2px;
 }
 
 /* 提示图标 */
