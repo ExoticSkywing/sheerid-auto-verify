@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,6 +8,7 @@
     <meta name="description" content="学生/教师批量验证服务，支持 Google Student 等验证方式">
     <link rel="stylesheet" href="css/style.css">
 </head>
+
 <body>
     <div class="container">
         <!-- 输入面板 -->
@@ -18,26 +20,23 @@
                     <span id="statusText">就绪</span>
                 </div>
             </div>
-            
+
             <div class="panel-body">
                 <!-- API Key 区域 -->
                 <div class="api-key-section">
                     <button class="btn btn-outline" id="setApiKeyBtn">🔑 设置 API Key</button>
                     <span class="api-key-status" id="apiKeyStatus">未设置</span>
                 </div>
-                
+
                 <!-- 输入区域 -->
                 <div class="input-section">
-                    <textarea 
-                        id="inputArea" 
-                        placeholder="输入验证 ID 或 URL，每行一个...&#10;&#10;支持直接粘贴 URL，将自动提取验证 ID"
-                        rows="12"
-                    ></textarea>
+                    <textarea id="inputArea" placeholder="输入验证 ID 或 URL，每行一个...&#10;&#10;支持直接粘贴 URL，将自动提取验证 ID"
+                        rows="12"></textarea>
                     <div class="input-hint">
                         💡 支持直接粘贴 URL，验证 ID 将被自动提取
                     </div>
                 </div>
-                
+
                 <!-- 统计和操作 -->
                 <div class="action-section">
                     <div class="stats">
@@ -51,7 +50,7 @@
                 </div>
             </div>
         </div>
-        
+
         <!-- 结果面板 -->
         <div class="panel result-panel">
             <div class="panel-header">
@@ -61,7 +60,7 @@
                     <button class="btn btn-outline btn-sm" id="exportBtn">导出</button>
                 </div>
             </div>
-            
+
             <div class="panel-body">
                 <div class="results-container" id="resultsContainer">
                     <!-- 空状态 -->
@@ -70,14 +69,14 @@
                         <p>暂无结果</p>
                         <p class="empty-hint">输入验证 ID 并点击开始</p>
                     </div>
-                    
+
                     <!-- 结果列表 -->
                     <div class="results-list" id="resultsList"></div>
                 </div>
             </div>
         </div>
     </div>
-    
+
     <!-- API Key 设置弹窗 -->
     <div class="modal" id="apiKeyModal">
         <div class="modal-backdrop"></div>
@@ -89,7 +88,7 @@
             <div class="modal-body">
                 <p class="modal-hint">输入您的 CDK/API Key：</p>
                 <input type="text" id="apiKeyInput" placeholder="cdk_xxxxxx..." class="input-field">
-                <p class="modal-note">💰 1元 = 1次成功验证，验证失败将退还费用</p>
+                <p class="modal-note">🎫 1 个 CDK = 5 次成功验证机会 | ✅ 不成功不扣次数</p>
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" id="cancelModalBtn">取消</button>
@@ -97,7 +96,8 @@
             </div>
         </div>
     </div>
-    
+
     <script src="js/main.js"></script>
 </body>
+
 </html>
