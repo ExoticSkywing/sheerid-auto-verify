@@ -517,7 +517,7 @@ textarea::placeholder {
     white-space: nowrap;
 }
 
-/* 消息样式：改为胶囊 Badge */
+/* 消息样式：改为胶囊 Badge，允许换行显示全称 */
 .result-message {
     font-size: 0.8rem;
     padding: 4px 10px;
@@ -526,11 +526,14 @@ textarea::placeholder {
     color: var(--text-dim);
     margin-left: auto;
     /* 推到右侧 */
-    max-width: 50%;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 70%;
+    /* 允许占据更多宽度，防止挤压 */
     text-align: right;
+    white-space: normal;
+    /* 允许换行 */
+    word-break: break-word;
+    /* 防止长单词溢出 */
+    line-height: 1.4;
 }
 
 /* 状态特定 Badge 样式 */
