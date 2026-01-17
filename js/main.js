@@ -23,6 +23,7 @@ const DOM = {
     inputArea: document.getElementById('inputArea'),
     idCount: document.getElementById('idCount'),
     startBtn: document.getElementById('startBtn'),
+    cancelBtn: document.getElementById('cancelBtn'),
     clearBtn: document.getElementById('clearBtn'),
     statusBadge: document.getElementById('statusBadge'),
     statusText: document.getElementById('statusText'),
@@ -197,8 +198,8 @@ async function startVerification(ids) {
 
     state.isProcessing = true;
     updateStatus('processing', '验证中...');
-    DOM.startBtn.disabled = true;
-    DOM.startBtn.textContent = '⏳ 处理中...';
+    DOM.startBtn.style.display = 'none';
+    DOM.cancelBtn.style.display = 'inline-flex';
 
     // 清空旧结果，开始新一轮验证
     state.results = [];
@@ -267,8 +268,8 @@ async function startVerification(ids) {
         state.isProcessing = false;
         state.abortController = null;
         updateStatus('', '就绪');
-        DOM.startBtn.disabled = false;
-        DOM.startBtn.textContent = '▶ 开始验证';
+        DOM.startBtn.style.display = 'inline-flex';
+        DOM.cancelBtn.style.display = 'none';
     }
 }
 
@@ -389,6 +390,21 @@ DOM.startBtn.addEventListener('click', () => {
 DOM.clearResultsBtn.addEventListener('click', () => {
     state.results = [];
     renderResults();
+});
+
+// 取消验证
+DOM.cancelBtn.addEventListener('click', () => {
+    if (state.abortController) {
+        state.abortController.abort();
+        // 将所有处理中的结果标记为已取消
+        state.results.forEach(r => {
+            if (r.status === 'processing') {
+                r.status = 'error';
+                r.message = '已取消';
+            }
+        });
+        renderResults();
+    }
 });
 
 // 导出结果

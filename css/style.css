@@ -240,6 +240,18 @@ body::after {
     transform: scale(1.05);
 }
 
+.btn-danger {
+    background: linear-gradient(135deg, #EA4335, #C5221F);
+    color: white;
+    box-shadow: 0 10px 20px rgba(234, 67, 53, 0.2);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #F44336, #D32F2F);
+    box-shadow: 0 12px 25px rgba(234, 67, 53, 0.3);
+    transform: scale(1.05);
+}
+
 .btn-outline {
     background: transparent;
     border: 1px solid rgba(0, 132, 255, 0.3);
