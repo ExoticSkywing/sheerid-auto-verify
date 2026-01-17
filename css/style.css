@@ -473,14 +473,15 @@ textarea::placeholder {
 .result-item {
     background: rgba(255, 255, 255, 0.02);
     margin-bottom: 8px;
-    padding: 10px;
-    border-radius: 4px;
+    padding: 12px 15px;
+    border-radius: 6px;
     border-left: 3px solid transparent;
     font-family: 'JetBrains Mono', monospace;
     font-size: 0.9rem;
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 15px;
+    /* 增加间距 */
     animation: fadeIn 0.3s ease;
 }
 
@@ -506,12 +507,75 @@ textarea::placeholder {
     background: linear-gradient(90deg, rgba(255, 42, 42, 0.05), transparent);
 }
 
+/* ID 样式：截断过长 ID */
 .result-id {
     color: var(--text-main);
+    font-weight: 500;
+    max-width: 40%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* 消息样式：改为胶囊 Badge */
+.result-message {
+    font-size: 0.8rem;
+    padding: 4px 10px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.1);
+    color: var(--text-dim);
+    margin-left: auto;
+    /* 推到右侧 */
+    max-width: 50%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    text-align: right;
+}
+
+/* 状态特定 Badge 样式 */
+.result-item.success .result-message {
+    background: rgba(0, 255, 157, 0.1);
+    color: var(--success);
+    border: 1px solid rgba(0, 255, 157, 0.2);
+}
+
+.result-item.error .result-message {
+    background: rgba(255, 42, 42, 0.1);
+    color: var(--danger);
+    border: 1px solid rgba(255, 42, 42, 0.2);
+}
+
+.result-item.processing .result-message {
+    background: rgba(252, 238, 10, 0.1);
+    color: var(--neon-yellow);
+    border: 1px solid rgba(252, 238, 10, 0.2);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 0.6;
+    }
+
+    50% {
+        opacity: 1;
+    }
+
+    100% {
+        opacity: 0.6;
+    }
 }
 
 .result-status {
+    /* 之前的样式，现在在 HTML 里被 .result-message 替代了部分功能，但 .result-badge 还在 */
     font-size: 0.8rem;
+}
+
+.result-badge {
+    /* 图标 */
+    font-size: 1.1rem;
+    margin-left: 5px;
 }
 
 /* 空状态 */
