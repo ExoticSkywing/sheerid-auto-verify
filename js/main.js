@@ -200,6 +200,10 @@ async function startVerification(ids) {
     DOM.startBtn.disabled = true;
     DOM.startBtn.textContent = '⏳ 处理中...';
 
+    // 清空旧结果，开始新一轮验证
+    state.results = [];
+    renderResults();
+
     // 为每个 ID 添加处理中状态
     ids.forEach(id => addResult(id, 'processing', '处理中...'));
 
