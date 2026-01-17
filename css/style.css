@@ -1,21 +1,30 @@
 :root {
     /* 核心色板 - Cyberpunk Neon */
-    --bg-dark: #050510;       /* 深空黑 */
-    --bg-panel: rgba(20, 20, 30, 0.6); /* 玻璃面板底色 */
-    
+    --bg-dark: #050510;
+    /* 深空黑 */
+    --bg-panel: rgba(20, 20, 30, 0.6);
+    /* 玻璃面板底色 */
+
     /* 霓虹主色 */
-    --neon-cyan: #00f3ff;     /* 青色 - 主交互/高亮 */
-    --neon-pink: #ff00ff;     /* 粉色 - 强调/边界 */
-    --neon-yellow: #fcee0a;   /* 黄色 - 警告/注意 */
-    
+    --neon-cyan: #00f3ff;
+    /* 青色 - 主交互/高亮 */
+    --neon-pink: #ff00ff;
+    /* 粉色 - 强调/边界 */
+    --neon-yellow: #fcee0a;
+    /* 黄色 - 警告/注意 */
+
     /* 状态色 */
-    --success: #00ff9d;       /* 荧光绿 */
-    --danger: #ff2a2a;        /* 警报红 */
-    
+    --success: #00ff9d;
+    /* 荧光绿 */
+    --danger: #ff2a2a;
+    /* 警报红 */
+
     /* 文本色 */
-    --text-main: #e0e0e0;     /* 亮灰 */
-    --text-dim: #8892b0;      /* 暗灰 */
-    
+    --text-main: #e0e0e0;
+    /* 亮灰 */
+    --text-dim: #8892b0;
+    /* 暗灰 */
+
     /* 特效参数 */
     --glass-blur: 12px;
     --border-glow: 0 0 10px rgba(0, 243, 255, 0.3);
@@ -28,14 +37,14 @@
 
 body {
     background-color: var(--bg-dark);
-    background-image: 
+    background-image:
         radial-gradient(circle at 10% 20%, rgba(0, 243, 255, 0.1) 0%, transparent 40%),
         radial-gradient(circle at 90% 80%, rgba(255, 0, 255, 0.1) 0%, transparent 40%),
-        linear-gradient(rgba(0,0,0,0.7) 1px, transparent 1px),
-        linear-gradient(90deg, rgba(0,0,0,0.7) 1px, transparent 1px);
+        linear-gradient(rgba(0, 0, 0, 0.7) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(0, 0, 0, 0.7) 1px, transparent 1px);
     background-size: 100% 100%, 100% 100%, 40px 40px, 40px 40px;
     background-position: 0 0, 0 0, -1px -1px, -1px -1px;
-    
+
     color: var(--text-main);
     font-family: 'Inter', 'Segoe UI', sans-serif;
     margin: 0;
@@ -54,12 +63,10 @@ body::after {
     left: 0;
     width: 100vw;
     height: 100vh;
-    background: repeating-linear-gradient(
-        0deg,
-        transparent,
-        transparent 2px,
-        rgba(0, 0, 0, 0.2) 3px
-    );
+    background: repeating-linear-gradient(0deg,
+            transparent,
+            transparent 2px,
+            rgba(0, 0, 0, 0.2) 3px);
     pointer-events: none;
     z-index: 9999;
 }
@@ -146,9 +153,20 @@ body::after {
 }
 
 /* 状态变化类 - JS 会用到 */
-.status-badge.ready .status-dot { background-color: var(--success); box-shadow: 0 0 8px var(--success); }
-.status-badge.working .status-dot { background-color: var(--neon-yellow); box-shadow: 0 0 8px var(--neon-yellow); }
-.status-badge.error .status-dot { background-color: var(--danger); box-shadow: 0 0 8px var(--danger); }
+.status-badge.ready .status-dot {
+    background-color: var(--success);
+    box-shadow: 0 0 8px var(--success);
+}
+
+.status-badge.working .status-dot {
+    background-color: var(--neon-yellow);
+    box-shadow: 0 0 8px var(--neon-yellow);
+}
+
+.status-badge.error .status-dot {
+    background-color: var(--danger);
+    box-shadow: 0 0 8px var(--danger);
+}
 
 /* 面板主体 */
 .panel-body {
@@ -206,10 +224,11 @@ body::after {
     left: -50%;
     width: 200%;
     height: 200%;
-    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.1), transparent);
     transform: rotate(45deg) translate(-100%, -100%);
     transition: transform 0.4s;
 }
+
 .btn:hover::after {
     transform: rotate(45deg) translate(0, 0);
 }
@@ -297,13 +316,14 @@ textarea:focus {
 }
 
 textarea::placeholder {
-    color: rgba(255, 255, 255, 0.2);
+    color: rgba(255, 255, 255, 0.5);
 }
 
 .input-hint {
     font-size: 0.8rem;
     color: var(--neon-yellow);
-    opacity: 0.8;
+    opacity: 1;
+    text-shadow: 0 0 5px rgba(252, 238, 10, 0.3);
 }
 
 /* 统计和操作栏 */
@@ -313,12 +333,13 @@ textarea::placeholder {
     align-items: center;
     margin-top: auto;
     padding-top: 15px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .stats {
     font-size: 0.9rem;
-    color: var(--text-dim);
+    color: #fff;
+    /* 提升亮度 */
 }
 
 #idCount {
@@ -389,20 +410,39 @@ textarea::placeholder {
     transition: all 0.3s;
 }
 
-.stat-card.stat-success { border-color: rgba(0, 255, 157, 0.3); }
-.stat-card.stat-failed { border-color: rgba(255, 42, 42, 0.3); }
-.stat-card.stat-total { border-color: rgba(255, 255, 255, 0.1); }
+.stat-card.stat-success {
+    border-color: rgba(0, 255, 157, 0.3);
+}
+
+.stat-card.stat-failed {
+    border-color: rgba(255, 42, 42, 0.3);
+}
+
+.stat-card.stat-total {
+    border-color: rgba(255, 255, 255, 0.1);
+}
 
 .stat-number {
     font-size: 1.5rem;
     font-weight: 700;
     margin-bottom: 5px;
-    font-family: 'Orbitron', sans-serif; /* 假设引入了这个字体，或者回退 */
+    font-family: 'Orbitron', sans-serif;
+    /* 假设引入了这个字体，或者回退 */
 }
 
-.stat-success .stat-number { color: var(--success); text-shadow: 0 0 10px rgba(0, 255, 157, 0.5); }
-.stat-failed .stat-number { color: var(--danger); text-shadow: 0 0 10px rgba(255, 42, 42, 0.5); }
-.stat-total .stat-number { color: var(--text-main); }
+.stat-success .stat-number {
+    color: var(--success);
+    text-shadow: 0 0 10px rgba(0, 255, 157, 0.5);
+}
+
+.stat-failed .stat-number {
+    color: var(--danger);
+    text-shadow: 0 0 10px rgba(255, 42, 42, 0.5);
+}
+
+.stat-total .stat-number {
+    color: var(--text-main);
+}
 
 .stat-label {
     font-size: 0.75rem;
@@ -414,7 +454,8 @@ textarea::placeholder {
 /* 结果列表 */
 .results-container {
     flex: 1;
-    overflow-y: hidden; /* 由 inner list 滚动 */
+    overflow-y: hidden;
+    /* 由 inner list 滚动 */
     display: flex;
     flex-direction: column;
     background: rgba(0, 0, 0, 0.2);
@@ -444,8 +485,15 @@ textarea::placeholder {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(5px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(5px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .result-item.success {
@@ -474,7 +522,8 @@ textarea::placeholder {
     justify-content: center;
     height: 100%;
     color: var(--text-dim);
-    opacity: 0.5;
+    opacity: 0.8;
+    /* 提升不透明度 */
 }
 
 .empty-icon {
@@ -618,12 +667,12 @@ textarea::placeholder {
         flex-direction: column;
         height: auto;
     }
-    
+
     .panel {
         min-width: 100%;
         min-height: 500px;
     }
-    
+
     body {
         padding: 10px;
     }
