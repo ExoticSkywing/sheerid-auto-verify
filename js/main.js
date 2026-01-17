@@ -317,9 +317,16 @@ function handleSSEData(data) {
 
     // 处理验证结果
     if (data.verificationId) {
-        const status = data.currentStep === 'success' ? 'success' :
-            data.currentStep === 'error' ? 'error' : 'processing';
-        const message = data.message || data.currentStep || '未知';
+        // 根据 API 文档：success = 成功，error = 失败，pending = 处理中，其他 = 处理中
+        let status = 'processing';
+        if (data.currentStep === 'success') {
+            status = 'success';
+        } else if (data.currentStep === 'error') {
+            status = 'error';
+        }
+        // pending 和其他状态都视为 processing
+
+        const message = data.message || data.currentStep || '处理中...';
         addResult(data.verificationId, status, message);
     }
 
