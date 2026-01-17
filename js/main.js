@@ -317,7 +317,7 @@ function handleSSEData(data) {
 
     // 处理验证结果
     if (data.verificationId) {
-        // 根据 API 文档：success = 成功，error = 失败，pending = 需要轮询
+        // 根据 API 文档：success = 成功，error = 失败，其他 = 处理中
         let status = 'processing';
         if (data.currentStep === 'success') {
             status = 'success';
@@ -328,8 +328,9 @@ function handleSSEData(data) {
         const message = data.message || data.currentStep || '处理中...';
         addResult(data.verificationId, status, message);
 
-        // 如果是 pending 状态且有 checkToken，启动轮询
-        if (data.currentStep === 'pending' && data.checkToken) {
+        // 关键：任何非终态状态（非 success/error）只要有 checkToken 就启动轮询
+        const isTerminal = (data.currentStep === 'success' || data.currentStep === 'error');
+        if (!isTerminal && data.checkToken) {
             pollStatus(data.verificationId, data.checkToken);
         }
     }
