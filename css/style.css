@@ -377,9 +377,86 @@ textarea:focus,
     margin-left: 8px;
 }
 
+/* 进度区域 */
+.progress-section {
+    margin-bottom: 24px;
+}
+
+.progress-bar {
+    width: 100%;
+    height: 8px;
+    background: rgba(0, 132, 255, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--color-primary), var(--color-accent));
+    border-radius: 4px;
+    width: 0%;
+    transition: width 0.3s var(--ease-tech);
+}
+
+.progress-text {
+    text-align: center;
+    font-size: 14px;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+/* 统计卡片 */
+.stats-cards {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.stat-card {
+    background: rgba(255, 255, 255, 0.6);
+    border: 1px solid rgba(255, 255, 255, 0.8);
+    border-radius: 16px;
+    padding: 20px;
+    text-align: center;
+    transition: transform 0.3s var(--ease-tech);
+}
+
+.stat-card:hover {
+    transform: translateY(-4px);
+}
+
+.stat-number {
+    font-size: 32px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.stat-label {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.stat-success .stat-number {
+    color: var(--success);
+}
+
+.stat-failed .stat-number {
+    color: var(--error);
+}
+
+.stat-total .stat-number {
+    color: var(--color-primary);
+}
+
 /* 结果列表细节 */
 .results-container {
     height: 100%;
+    max-height: 400px;
+    overflow-y: auto;
 }
 
 .results-list {
@@ -421,10 +498,24 @@ textarea:focus,
     font-size: 13px;
     flex: 1;
     color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-.result-status {
-    font-weight: 700;
+.result-message {
+    font-size: 13px;
+    color: var(--text-tertiary);
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.result-badge {
+    font-size: 16px;
+    min-width: 24px;
+    text-align: center;
 }
 
 .result-item.success .result-status {

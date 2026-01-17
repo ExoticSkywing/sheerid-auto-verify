@@ -43,7 +43,16 @@ const DOM = {
     resultsList: document.getElementById('resultsList'),
     emptyState: document.getElementById('emptyState'),
     clearResultsBtn: document.getElementById('clearResultsBtn'),
-    exportBtn: document.getElementById('exportBtn')
+    exportBtn: document.getElementById('exportBtn'),
+
+    // 进度和统计
+    progressSection: document.getElementById('progressSection'),
+    progressFill: document.getElementById('progressFill'),
+    progressText: document.getElementById('progressText'),
+    statsCards: document.getElementById('statsCards'),
+    statSuccess: document.getElementById('statSuccess'),
+    statFailed: document.getElementById('statFailed'),
+    statTotal: document.getElementById('statTotal')
 };
 
 // ============ 工具函数 ============
@@ -125,19 +134,46 @@ function addResult(id, status, message) {
  * 渲染结果列表
  */
 function renderResults() {
-    if (state.results.length === 0) {
-        DOM.emptyState.classList.remove('hidden');
+    const total = state.results.length;
+    const success = state.results.filter(r => r.status === 'success').length;
+    const failed = state.results.filter(r => r.status === 'error').length;
+    const completed = success + failed;
+
+    // 显示/隐藏进度和统计
+    if (total === 0) {
+        DOM.emptyState.style.display = 'block';
+        DOM.progressSection.style.display = 'none';
+        DOM.statsCards.style.display = 'none';
         DOM.resultsList.innerHTML = '';
         return;
     }
 
-    DOM.emptyState.classList.add('hidden');
-    DOM.resultsList.innerHTML = state.results.map(r => `
-        <div class="result-item ${r.status}">
-            <span class="result-id">${escapeHtml(r.id)}</span>
-            <span class="result-status">${escapeHtml(r.message)}</span>
-        </div>
-    `).join('');
+    DOM.emptyState.style.display = 'none';
+    DOM.progressSection.style.display = 'block';
+    DOM.statsCards.style.display = 'grid';
+
+    // 更新进度条
+    const progress = total > 0 ? (completed / total) * 100 : 0;
+    DOM.progressFill.style.width = progress + '%';
+    DOM.progressText.textContent = `${completed} / ${total} completed`;
+
+    // 更新统计卡片
+    DOM.statSuccess.textContent = success;
+    DOM.statFailed.textContent = failed;
+    DOM.statTotal.textContent = total;
+
+    // 渲染结果列表
+    DOM.resultsList.innerHTML = state.results.map(r => {
+        const statusBadge = r.status === 'success' ? '✅' :
+            r.status === 'error' ? '❌' : '⏳';
+        return `
+            <div class="result-item ${r.status}">
+                <span class="result-id">${escapeHtml(r.id)}</span>
+                <span class="result-message">${escapeHtml(r.message)}</span>
+                <span class="result-badge">${statusBadge}</span>
+            </div>
+        `;
+    }).join('');
 }
 
 /**

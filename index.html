@@ -63,12 +63,36 @@
             <div class="panel-header">
                 <h2>📋 结果</h2>
                 <div class="result-actions">
-                    <button class="btn btn-outline btn-sm" id="clearResultsBtn">清空</button>
-                    <button class="btn btn-outline btn-sm" id="exportBtn">导出</button>
+                    <button class="btn btn-outline btn-sm" id="clearResultsBtn">🗑 清空</button>
+                    <button class="btn btn-outline btn-sm" id="exportBtn">📥 导出</button>
                 </div>
             </div>
 
             <div class="panel-body">
+                <!-- 进度区域 -->
+                <div class="progress-section" id="progressSection" style="display: none;">
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                    <div class="progress-text" id="progressText">0 / 0 completed</div>
+                </div>
+
+                <!-- 统计卡片 -->
+                <div class="stats-cards" id="statsCards" style="display: none;">
+                    <div class="stat-card stat-success">
+                        <div class="stat-number" id="statSuccess">0</div>
+                        <div class="stat-label">Success</div>
+                    </div>
+                    <div class="stat-card stat-failed">
+                        <div class="stat-number" id="statFailed">0</div>
+                        <div class="stat-label">Failed</div>
+                    </div>
+                    <div class="stat-card stat-total">
+                        <div class="stat-number" id="statTotal">0</div>
+                        <div class="stat-label">Total</div>
+                    </div>
+                </div>
+
                 <div class="results-container" id="resultsContainer">
                     <!-- 空状态 -->
                     <div class="empty-state" id="emptyState">
