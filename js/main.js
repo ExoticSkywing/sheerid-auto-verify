@@ -317,17 +317,21 @@ function handleSSEData(data) {
 
     // 处理验证结果
     if (data.verificationId) {
-        // 根据 API 文档：success = 成功，error = 失败，pending = 处理中，其他 = 处理中
+        // 根据 API 文档：success = 成功，error = 失败，pending = 需要轮询
         let status = 'processing';
         if (data.currentStep === 'success') {
             status = 'success';
         } else if (data.currentStep === 'error') {
             status = 'error';
         }
-        // pending 和其他状态都视为 processing
 
         const message = data.message || data.currentStep || '处理中...';
         addResult(data.verificationId, status, message);
+
+        // 如果是 pending 状态且有 checkToken，启动轮询
+        if (data.currentStep === 'pending' && data.checkToken) {
+            pollStatus(data.verificationId, data.checkToken);
+        }
     }
 
     // 处理配额信息
@@ -344,6 +348,56 @@ function handleSSEData(data) {
     if (data.completed !== undefined) {
         console.log(`完成 ${data.completed}/${data.total}`);
     }
+}
+
+/**
+ * 轮询检查验证状态
+ */
+async function pollStatus(verificationId, checkToken) {
+    const maxAttempts = 60; // 最多轮询 60 次（约 5 分钟）
+    const interval = 5000; // 每 5 秒轮询一次
+
+    for (let i = 0; i < maxAttempts; i++) {
+        try {
+            const response = await fetch('/api/check-status', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ checkToken })
+            });
+
+            if (!response.ok) {
+                console.error('轮询失败:', response.status);
+                break;
+            }
+
+            const data = await response.json();
+            console.log('轮询结果:', data);
+
+            // 更新状态
+            if (data.currentStep === 'success') {
+                addResult(verificationId, 'success', data.message || '验证成功');
+                return; // 结束轮询
+            } else if (data.currentStep === 'error') {
+                addResult(verificationId, 'error', data.message || '验证失败');
+                return; // 结束轮询
+            } else {
+                // 仍在处理中，更新消息
+                addResult(verificationId, 'processing', data.message || '处理中...');
+            }
+
+            // 继续等待
+            await new Promise(resolve => setTimeout(resolve, interval));
+
+        } catch (e) {
+            console.error('轮询出错:', e);
+            break;
+        }
+    }
+
+    // 轮询超时
+    console.warn('轮询超时，验证 ID:', verificationId);
 }
 
 /**
