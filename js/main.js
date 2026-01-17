@@ -152,15 +152,32 @@ function escapeHtml(text) {
 
 /**
  * 获取 CSRF Token
+ * 从上游服务首页动态获取
  */
 async function getCsrfToken() {
-    // 尝试从全局变量获取
-    if (window.CSRF_TOKEN) {
-        return window.CSRF_TOKEN;
+    // 优先使用缓存的 Token（5分钟内有效）
+    if (window._csrfToken && window._csrfTokenTime && (Date.now() - window._csrfTokenTime < 300000)) {
+        return window._csrfToken;
     }
 
-    // 可能需要从首页获取，这里返回空字符串
-    // 后端可能在使用 API Key 时不需要 CSRF
+    try {
+        // 请求上游首页（通过 Nginx 代理）
+        const response = await fetch('/upstream/');
+        if (response.ok) {
+            const html = await response.text();
+            // 从 HTML 中提取 CSRF_TOKEN
+            const match = html.match(/CSRF_TOKEN\s*=\s*["']([^"']+)["']/);
+            if (match && match[1]) {
+                window._csrfToken = match[1];
+                window._csrfTokenTime = Date.now();
+                console.log('✅ CSRF Token 获取成功');
+                return match[1];
+            }
+        }
+    } catch (e) {
+        console.warn('获取 CSRF Token 失败:', e);
+    }
+
     return '';
 }
 
